@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera & Call App</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+    }
+    #camera {
+      width: 100%;
+      height: 50vh;
+      object-fit: cover;
+      background: #000;
+    }
+    #bottom {
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #callButton {
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Camera App</h1>
+  <video id="camera" autoplay playsinline></video>
+
+  <div id="bottom">
+    <button id="callButton" onclick="window.location.href='tel:+1234567890'">Call Now</button>
+  </div>
+
+  <script>
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "environment" },
+          audio: false
+        });
+        document.getElementById('camera').srcObject = stream;
+      } catch (err) {
+        alert("Camera access denied. Please check your browser settings.");
+        console.error("Error accessing camera:", err);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", startCamera);
+
+    document.addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        <!-- openFullscreen(); -->
+      }
+    });
+
+    function openFullscreen() {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.log("Fullscreen blocked:", err);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
