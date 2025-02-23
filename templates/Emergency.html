@@ -4,28 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emergency Call</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @view-transition {
+            navigation: auto;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+            color: white;
+            padding: 20px;
+        }
+
+        .emergency-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff4444;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon {
+            font-size: 4rem;
+            color: #ff4444;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            line-height: 1.6;
+            color: #cccccc;
+        }
+
+        .call-button {
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ff4444, #ff6b6b);
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            margin: 20px 0;
+        }
+
+        .call-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+            background: linear-gradient(45deg, #ff6b6b, #ff8383);
+        }
+
+        .call-button i {
+            margin-right: 10px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
     <script>
         window.onload = function() {
-            // Open the phone dialer when the page loads
             window.location.href = "tel:4694556805";
         };
     </script>
 </head>
 <body>
-    <h1>Emergency Call</h1>
-    <p>If the call does not start automatically, click the button below.</p>
-    
-    <a href="tel:911" style="
-        display: inline-block;
-        padding: 15px 30px;
-        font-size: 20px;
-        font-weight: bold;
-        color: white;
-        background-color: red;
-        border-radius: 10px;
-        text-decoration: none;
-        cursor: pointer;">
-        Call 4694556805
+   
     </a>
+    
+    <div class="emergency-container">
+        <i class="fas fa-phone-volume icon"></i>
+        <h1>Emergency Call</h1>
+        <p>If the call does not start automatically, please click the button below to initiate the emergency call.</p>
+        
+        <a href="tel:4694556805" class="call-button">
+            <i class="fas fa-phone"></i>
+            Call Emergency Number
+        </a>
+        
+        <p style="font-size: 0.9rem; opacity: 0.7;">
+            In case of emergency, stay calm and provide clear information about your situation.
+        </p>
+    </div>
 </body>
 </html>

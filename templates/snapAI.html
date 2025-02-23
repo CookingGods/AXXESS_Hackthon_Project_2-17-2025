@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnapAI</title>
+  <style> 
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: black;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #camera {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+#cameraStream {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+#callButton {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #ff0000;
+  color: white;
+  cursor: pointer;
+  z-index: 10; 
+}
+
+  #bottom {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.photoButton {
+position: absolute;
+bottom: 25px;
+left: 50%;
+transform: translateX(-50%);
+
+background-size: contain;
+background-repeat: no-repeat; 
+width: 75px;
+height: 75px;
+border: none;
+border-radius: 50%;
+cursor: pointer;
+}
+
+  #chatContainer {
+    display: none;
+    position: fixed; 
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    background-color: #000000;
+    color: white;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  #chatMessages {
+    padding: 10px;
+    height: 85%;
+    overflow-y: auto;
+  }
+
+  #userInput {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+  }
+
+  #sendButton {
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: #002fff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+
+  #chatInputBar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px;
+    z-index: 2; 
+  }
+
+  #chatInputBar input {
+    width: 70%;
+    padding: 5px;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+  }
+
+  #chatInputBar button {
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: #1a26ff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  #capturedImage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  display: none;
+}
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    z-index: 1000;
+}
+
+.back-button button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <a href="main.html" class="back-button">
+    <button>Back</button>
+  </a>
+  <a href="{{ url_for('index') }}" class="back-button">
+    <button>
+        Back
+    </button>
+</a>
+
+
+
+  <div id="camera">
+    <video id="cameraStream" autoplay playsinline></video>
+    <button id="callButton" onclick="window.location.href='tel:+1234567890'">Call 911</button>
+    <img id="capturedImage" src="" alt="Captured Image" />
+    <button class="photoButton" onclick="captureImage()"></button>
+  </div>
+  
+  <div id="chatContainer">
+    <div id="chatMessages">
+    </div>
+    <div id="chatInputBar">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button id="sendButton" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    let videoStream; 
+
+    async function startCamera() {
+      try {
+        videoStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "environment" },
+          audio: false
+        });
+        document.getElementById('cameraStream').srcObject = videoStream;
+      } catch (err) {
+        alert("Camera access denied. Please check your browser settings.");
+        console.error("Error accessing camera:", err);
+      }
+    }
+
+    // Capture image from video feed
+async function captureImage() {
+    console.log('Capture image clicked');
+    const camera = document.getElementById('camera');
+    const video = document.getElementById('cameraStream');
+    const captureButton = document.querySelector('.photoButton');
+    const callButton = document.getElementById('callButton');
+    const canvas = document.createElement('canvas');
+    const capturedImage = document.getElementById('capturedImage');
+    const chatContainer = document.getElementById('chatContainer');
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    // Draw current video frame to canvas
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Convert canvas to a Blob in JPEG format
+    canvas.toBlob(async (blob) => {
+        // Create FormData to send the image as a file
+        const formData = new FormData();
+        formData.append('image', blob, 'captured_image.jpg');  // Append the Blob as a file
+
+        // Submit the image to Flask using the getObjResponse function
+        const response = await getObjResponse(formData);
+        // console.log('Response:', response);
+        const label = response.label;
+        console.log('Label:', label);
+        initialDescription(label);
+
+        stopVideoStream();
+
+        // Hide video and show captured image
+        video.style.display = 'none';
+        captureButton.style.display = 'none';
+
+        // Use the URL of the saved image from Flask
+        capturedImage.src = "http://192.168.61.99:5000/uploads/output_with_boxes_and_labels.jpg";
+        capturedImage.style.display = 'block';
+        callButton.style.display = 'block';
+        chatContainer.style.display = 'block';
+        camera.style.height = '60vh';
+    }, 'image/jpeg');
+}
+
+    function stopVideoStream() {
+      if (videoStream) {
+        const tracks = videoStream.getTracks();
+        tracks.forEach(track => track.stop());
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", startCamera);
+
+    async function sendMessage() {
+      const userInput = document.getElementById("userInput").value;
+      if (userInput.trim() === "") return;
+
+      // Add user message to chat window
+      const chatMessages = document.getElementById("chatMessages");
+      chatMessages.innerHTML += '<div><strong>User:</strong> ${userInput}</div>';
+
+      // Call the Flask backend with user input
+      const response = await getGeminiResponse(userInput);
+
+      // Add Gemini response to chat window
+      chatMessages.innerHTML += `<div><strong>SnapAI:</strong> ${response}</div>`;
+      document.getElementById("userInput").value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function initialDescription(label) {
+    // Call the Flask backend with the label
+    const response = await fetch('http://192.168.61.99:5000/chat', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Starting now, You are a first aid assistant named SnapAI. I will say a medical issue that I have, and I want you to 
+        provide me with 3 to 5 steps on what to do. You can ask me additional questions about how I got this medical issue.
+        I do not want you to repeat your instructions. You should start by saying something like such and such medical issue is mild, moderate, or severe.
+        Then maybe ask a question or two if it is necessary for your diagnosis. Then give first aid steps to treat it. End by saying wether or not I should call
+        911 or go to the ER. The first medical issue is ${label}.`,
+
+  }),
+    });
+
+  // Parse the response from Flask
+  const data = await response.json();
+
+if (response.ok) {
+  chatMessages.innerHTML += `<div><strong>SnapAI:</strong> ${data.response}</div>`;
+} else {
+  chatMessages.innerHTML += `<div><strong>SnapAI:</strong> ${data.error}</div>`;
+}
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+
+    // API Call to Flask backend to interact with Gemini
+    async function getGeminiResponse(prompt) {
+      try {
+        const response = await axios.post('http://192.168.61.99:5000/chat', {
+        message: prompt,
+      });
+        return response.data.response || "Sorry, there was an error.";
+      } catch (error) {
+        console.error("Error calling Flask API:", error);
+        return "Sorry, there was an error.";
+      }
+    }
+
+    async function getObjResponse(formData) {
+      try {
+          const response = await axios.post('http://192.168.61.99:5000/process-image', formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+              }
+          });
+
+          return response.data || "Sorry, there was an error.";
+      } catch (error) {
+          console.error("Error calling Flask API:", error);
+          return "Sorry, there was an error.";
+      }
+  }
+  </script>
+</body>
+</html>

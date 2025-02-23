@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My First HTML Page</title>
     <style>
+        @view-transition {
+            navigation: auto;
+        }
+        /* Set the background color of the body to black */
+        body {
+            background-color: black;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
         /* Ensures the iframe fits well within the page */
         .iframe-container {
             width: 100%;
@@ -14,7 +24,6 @@
     </style>
 </head>
 <body>
-  
     <!-- Embedding the chatbot using an iframe -->
     <div class="iframe-container">
         <iframe

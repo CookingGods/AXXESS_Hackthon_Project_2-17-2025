@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, send_file, send_from_directory
 from flask_cors import CORS
 import google.genai as genai
-import markdown  # Import markdown library to convert markdown to HTML
+import markdown
 from inference_sdk import InferenceHTTPClient
 from PIL import Image, ImageDraw, ImageFont
 from dotenv import load_dotenv
@@ -11,40 +11,50 @@ import io
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 CORS(app)
 
-# Replace with your actual API key
-GEM_API_KEY = "AIzaSyC9GysX1DVC_OZ3dZSQ_TMytXGA1e9Ff3w"  # Replace with your actual API key
+GEM_API_KEY = os.getenv('gemini_api')
 
-# Initialize the GenAI client
 client = genai.Client(api_key=GEM_API_KEY)
 
 @app.route('/', methods=['GET'])
-def home():
-    return render_template("main.html")
+def index():
+    return render_template("index.html")
+
+@app.route('/snapAI', methods=['GET'])
+def snapAI():
+    return render_template("snapAI.html")
+
+@app.route('/Chatbot', methods=['GET'])
+def Chatbot():
+    return render_template("Chatbot.html")
+
+@app.route('/Emergency', methods=['GET'])
+def Emergency():
+    return render_template("Emergency.html")
+
+@app.route('/ERMAP', methods=['GET'])
+def ERMAP():
+    return render_template("ERMAP.html")
+
 
 @app.route('/chat', methods=['POST'])
 def chat():
     user_message = request.json.get("message")
-    initial_prompt = "You are a first aid assistant named SnapAI. The first input will be the first aid emergency and I want you to provide me with 3 to 5 steps on what to do. If you need to ask a follow-up question for more information go ahead. If the situation is severe recommend calling 911."  # Example prompt
 
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
 
     try:
-        # Combine the initial prompt with the user's message
-        combined_prompt = initial_prompt + "\nUser: " + user_message
-
-        # Use the genai client to send the request to the Gemini model
         response = client.models.generate_content(
-            model="gemini-2.0-flash",  # Use the appropriate model
-            contents=combined_prompt  # Send the combined prompt and user's message
+            model="gemini-2.0-flash",
+            contents=user_message 
         )
 
         # Convert the response from Gemini to HTML if it contains markdown
         if response.text:
-            html_response = markdown.markdown(response.text)  # Convert markdown to HTML
+            html_response = markdown.markdown(response.text)
             return jsonify({"response": html_response}), 200
         else:
             return jsonify({"error": "No response from Gemini"}), 500
@@ -52,10 +62,6 @@ def chat():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-client = InferenceHTTPClient(
-    api_url = "http://localhost:9001",  # use the local inference server
-    api_key="Ups9KQLQ0H6FQKTlonqT"
-)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
@@ -74,8 +80,8 @@ def process_image():
         image_file.save(image_path)
 
         client = InferenceHTTPClient(
-            api_url="http://localhost:9001",  # use local inference server
-            api_key="Ups9KQLQ0H6FQKTlonqT"
+            api_url="http://localhost:9001", 
+            api_key= os.getenv('roboflow_api')
         )
 
         result = client.run_workflow(
@@ -87,7 +93,6 @@ def process_image():
         if not result:
             return jsonify({"error": "No result returned from inference."}), 400
 
-        # Assuming result is a list, process the first item (or adjust based on structure)
         predictions = result[0].get('predictions', {}).get('predictions', [])
 
         if not predictions:
@@ -132,13 +137,12 @@ def process_image():
         output_image_path = "output_with_boxes_and_labels.jpg"
         image.save(output_image_path)
 
-        # Return the processed image file
-        return send_file(output_image_path, mimetype='image/jpeg')
+        return jsonify({'label': label})
 
     except Exception as e:
         error_message = f"Error processing image: {str(e)}"
         print(error_message)
-        print(traceback.format_exc())  # Print detailed error stack trace
+        print(traceback.format_exc())
         return jsonify({"error": error_message}), 500
 
 

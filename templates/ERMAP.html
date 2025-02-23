@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Nearest ER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* Full-screen video background */
+        @view-transition {
+            navigation: auto;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
         body {
             margin: 0;
             overflow: hidden;
-            font-family: Arial, sans-serif;
             color: white;
             text-align: center;
             display: flex;
@@ -17,6 +26,7 @@
             align-items: center;
             height: 100vh;
             position: relative;
+            background: #1e1e1e;
         }
 
         video {
@@ -26,47 +36,109 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: brightness(0.7);
         }
 
-        /* Content container */
         .content {
             position: relative;
             z-index: 2;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Loader animation */
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #ff4444;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .status-icon {
+            font-size: 3.5rem;
+            color: #ff4444;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            color: #ffffff;
+        }
+
         .loader {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+            width: 60px;
+            height: 60px;
+            margin: 30px auto;
+            position: relative;
             display: none;
+        }
+
+        .loader:before,
+        .loader:after {
+            content: '';
+            position: absolute;
+            border: 4px solid transparent;
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        .loader:before {
+            border-top-color: #ff4444;
+            border-bottom-color: #ff4444;
+        }
+
+        .loader:after {
+            border-left-color: #ff4444;
+            border-right-color: #ff4444;
+            animation-delay: 1s;
         }
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
     </style>
 </head>
 
 <body>
-    <!-- Background Video -->
+    
+    </a>
+
     <video autoplay muted loop>
         <source src="0222.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
-    <!-- Content -->
     <div class="content">
-        <h2>Finding the Nearest Emergency Room...</h2>
-        <p id="status">Please wait while we locate the nearest emergency room.</p>
+        <i class="fas fa-hospital status-icon"></i>
+        <h2>Finding Nearest Emergency Room</h2>
+        <p id="status">Please allow location access to find the closest emergency room to your current position.</p>
         <div class="loader" id="loader"></div>
     </div>
 
@@ -107,8 +179,10 @@
         }
 
         function handleError(message) {
-            alert(message);
-            window.location.href = "https://www.google.com/maps/search/emergency+room+near+me";
+            document.getElementById("status").textContent = message;
+            setTimeout(() => {
+                window.location.href = "https://www.google.com/maps/search/emergency+room+near+me";
+            }, 2000);
         }
 
         findNearestER();
