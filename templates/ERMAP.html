@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearest ER</title>
+    <style>
+        /* Full-screen video background */
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Content container */
+        .content {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Loader animation */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop>
+        <source src="0222.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Content -->
+    <div class="content">
+        <h2>Finding the Nearest Emergency Room...</h2>
+        <p id="status">Please wait while we locate the nearest emergency room.</p>
+        <div class="loader" id="loader"></div>
+    </div>
+
+    <script>
+        function findNearestER() {
+            document.getElementById("loader").style.display = "block";
+
+            if (!navigator.geolocation) {
+                handleError("Geolocation is not supported by your browser.");
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+                    var googleMapsUrl = `https://www.google.com/maps/dir/${lat},${lon}/emergency+room/`;
+                    window.location.href = googleMapsUrl;
+                },
+                function(error) {
+                    let message = "";
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            message = "Location access denied. Redirecting to a generic ER search.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            message = "Location information is unavailable.";
+                            break;
+                        case error.TIMEOUT:
+                            message = "Location request timed out.";
+                            break;
+                        default:
+                            message = "An unknown error occurred.";
+                    }
+                    handleError(message);
+                }
+            );
+        }
+
+        function handleError(message) {
+            alert(message);
+            window.location.href = "https://www.google.com/maps/search/emergency+room+near+me";
+        }
+
+        findNearestER();
+    </script>
+</body>
+</html>
