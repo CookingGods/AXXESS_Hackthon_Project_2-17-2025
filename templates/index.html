@@ -4,168 +4,166 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SnapAI</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: black;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #camera {
-      width: 100%;
-      height: 50vh;
-      object-fit: contain; /* This ensures the video scales within the container */
-      background: #000;
-      position: relative;
-      overflow: hidden;  /* Ensures no overflow beyond the container */
-    }
+  <style> 
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: black;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #camera {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
 
-    #cameraStream {
-      width: 100%;
-      height: 100%; /* Ensures video fills the container completely */
-      object-fit: contain; /* Prevents the video from stretching beyond its container */
-    }
-
-    #callButton {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 15px 25px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-    }
-
-    #bottom {
-      height: 50vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Image for Capture Button */
-.captureImage {
+#cameraStream {
   position: absolute;
-  bottom: 10px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background-image: url('images/logo.jpg'); /* Set the path to the logo */
-  background-size: contain; /* Ensures the logo fits within the button */
-  background-repeat: no-repeat; /* Avoid repeating the image */
-  width: 100px; /* Adjust the size of the button */
-  height: 100px; /* Adjust the height to match width */
-  border: none; /* Remove border */
-  border-radius: 50%; /* Make the button circular */
-  cursor: pointer;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 
-    /* Chat Section Styles */
-    #chatContainer {
-      position: fixed; /* Keep the chat container fixed at the bottom */
-      bottom: 0;
-      width: 100%;
-      height: 40%;
-      background-color: #333;
-      color: white;
-      overflow-y: auto;
-      padding: 10px;
-    }
+#callButton {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff0000;
+  color: white;
+  cursor: pointer;
+  z-index: 10; 
+}
 
-    #chatMessages {
-      padding: 10px;
-      height: 85%;
-      overflow-y: auto;
-    }
 
-    #userInput {
-      width: 80%;
-      padding: 10px;
-      border: none;
-      font-size: 1.2rem;
-      border-radius: 5px;
-    }
 
-    #sendButton {
-      padding: 10px;
-      font-size: 1.2rem;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-left: 10px;
-    }
+  #bottom {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    #chatInputBar {
-      position: fixed; /* Keep the input bar fixed at the bottom */
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      background-color: #333;
-      padding: 10px;
-      z-index: 2; /* Make sure it stays on top of the chat container */
-    }
+.photoButton {
+position: absolute;
+bottom: 25px;
+left: 50%;
+transform: translateX(-50%);
+background-image: url('./static/logo.jpg');
+background-size: contain;
+background-repeat: no-repeat; 
+width: 75px;
+height: 75px;
+border: none;
+border-radius: 50%;
+cursor: pointer;
+}
 
-    #chatInputBar input {
-      width: 70%;
-      padding: 5px;
-      border: none;
-      font-size: 1.2rem;
-      border-radius: 5px;
-    }
+  #chatContainer {
+    display: none;
+    position: fixed; 
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    background-color: #333;
+    color: white;
+    overflow-y: auto;
+    padding: 10px;
+  }
 
-    #chatInputBar button {
-      padding: 10px;
-      font-size: 1.2rem;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-left: 5px;
-    }
+  #chatMessages {
+    padding: 10px;
+    height: 85%;
+    overflow-y: auto;
+  }
 
-    #capturedImage {
-      width: 100%;
-      position: absolute;
-      top: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-    }
-  </style>
+  #userInput {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+  }
+
+  #sendButton {
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+
+  #chatInputBar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px;
+    z-index: 2; 
+  }
+
+  #chatInputBar input {
+    width: 70%;
+    padding: 5px;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+  }
+
+  #chatInputBar button {
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  #capturedImage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  display: none;
+}
+
+</style>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
   <div id="camera">
     <video id="cameraStream" autoplay playsinline></video>
-    <!-- Call Button above Camera -->
     <button id="callButton" onclick="window.location.href='tel:+1234567890'">Call Now</button>
-    <!-- Capture Image replaced with an Image -->
-    <!-- <img id="captureImage" src="logo.png" alt="Capture Image" onclick="captureImage()" /> -->
-    <button onclick="captureImage()" class="captureImage"></button>
-
+    <img id="capturedImage" src="" alt="Captured Image" />
+    <button class="photoButton" onclick="captureImage()"></button>
   </div>
   
-
-  <!-- Captured image display -->
-  <img id="capturedImage" src="" alt="Captured Image" />
-
-  <!-- Chat Container -->
   <div id="chatContainer">
     <div id="chatMessages">
-      <!-- Chat messages will appear here -->
     </div>
     <div id="chatInputBar">
       <input type="text" id="userInput" placeholder="Type your message..." />
@@ -174,7 +172,7 @@
   </div>
 
   <script>
-    let videoStream;  // Store video stream to stop it later
+    let videoStream; 
 
     async function startCamera() {
       try {
@@ -190,32 +188,50 @@
     }
 
     // Capture image from video feed
-    function captureImage() {
-      console.log('Capture image clicked');
-      const video = document.getElementById('cameraStream');
-      const canvas = document.createElement('canvas');
-      const capturedImage = document.getElementById('capturedImage');
+    async function captureImage() {
+    console.log('Capture image clicked');
+    const camera = document.getElementById('camera');
+    const video = document.getElementById('cameraStream');
+    const captureButton = document.querySelector('.photoButton');
+    const callButton = document.getElementById('callButton');
+    const canvas = document.createElement('canvas');
+    const capturedImage = document.getElementById('capturedImage');
+    const chatContainer = document.getElementById('chatContainer');
 
-      // Set canvas size to match video
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+    // Set canvas size to match video
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
 
-      // Draw current video frame to canvas
-      const context = canvas.getContext('2d');
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    // Draw current video frame to canvas
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // Convert canvas to a data URL (image)
-      const imageDataUrl = canvas.toDataURL('image/png');
-      console.log('Image data URL:', imageDataUrl);  // Check if image data URL is generated
+    // Convert canvas to a Blob in JPEG format
+    canvas.toBlob(async (blob) => {
+        // Create FormData to send the image as a file
+        const formData = new FormData();
+        formData.append('image', blob, 'captured_image.jpg');  // Append the Blob as a file
 
-      // Stop the video stream
-      stopVideoStream();
+        // Submit the image to Flask using the getObjResponse function
+        const ObjResponse = await getObjResponse(formData);
 
-      // Hide video and show captured image
-      video.style.display = 'none';
-      capturedImage.src = imageDataUrl;
-      capturedImage.style.display = 'block';  // Ensure the image is displayed
-    }
+        // Stop the video stream
+        stopVideoStream();
+
+        // Hide video and show captured image
+        video.style.display = 'none';
+        captureButton.style.display = 'none';
+
+        // Use the URL of the saved image from Flask
+        capturedImage.src = "http://192.168.61.99:5000/uploads/output_with_boxes_and_labels.jpg"; // URL to the image served by Flask
+        capturedImage.style.display = 'block';  // Ensure the image is displayed
+        callButton.style.display = 'block';
+        chatContainer.style.display = 'block';
+        camera.style.height = '60vh';
+    }, 'image/jpeg');
+}
+
+
 
     // Stop the video stream
     function stopVideoStream() {
@@ -251,9 +267,10 @@
     // API Call to Flask backend to interact with Gemini
     async function getGeminiResponse(prompt) {
       try {
-        const response = await axios.post('http://127.0.0.1:5000/chat', {
-          message: prompt,  // User input that you want to send to Gemini
-        });
+        const response = await axios.post('http://192.168.61.99:5000/chat', {
+        message: prompt,
+      });
+
 
         // Return the response from Gemini (Flask backend)
         return response.data.response || "Sorry, there was an error.";
@@ -262,6 +279,21 @@
         return "Sorry, there was an error.";
       }
     }
+
+    async function getObjResponse(formData) {
+    try {
+        const response = await axios.post('http://192.168.61.99:5000/process-image', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+
+        return response.data || "Sorry, there was an error.";
+    } catch (error) {
+        console.error("Error calling Flask API:", error);
+        return "Sorry, there was an error.";
+    }
+}
   </script>
 </body>
 </html>
