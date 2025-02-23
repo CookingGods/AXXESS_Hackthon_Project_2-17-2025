@@ -1,132 +1,119 @@
-*{
+** {
     box-sizing: border-box;
     margin: 0;
     height: 0;
 }
 
-.mainbox{
-    background:#42789D ;
+.mainbox {
+    background: #42789D;
     z-index: -1;
-    height: 96%;
-    width: 36%;
+    height: 96%; 
+    width: 36%;  
     position: fixed;
-    top: 25px;
-    right: 15px;
-    border-radius: 25px;
+    top: 2%;
+    right: 3%;
+    border-radius: 6%;
 }
 
+
 .camera_button{
-    width: 100px;
-    height: 100px;
-    margin: 660px 0px 0 275px;
+    width: 17%;
+    height: 150px;
+    margin: 3% 0px 0 71%;
     background-size: cover;
     background-image: url('images/logo.jpg');
-    border-radius: 100px;
+    border-radius: 50%;
     border: none;
     cursor: pointer;
 }
 
 .map_button{
-    width: 100px;
-    height: 100px;
-    margin: 465px 0px 0 275px;
+    width: 17%;
+    height: 150px;
+    margin: 3% 0px 0 71%;
     background-size: cover;
     background-image: url('images/map.jpg');
-    border-radius: 20px;
+    border-radius: 5%;
     border: none;
     cursor: pointer;
 }
 
-.emergency_button{
-    width: 100px;
-    height: 100px;
-    margin: 80px 0px 0 275px;
+.emergency_button {
+    width: 17%;
+    height: 150px; 
+    margin: 4% 0 0 71%; 
     background-size: cover;
     background-image: url('images/ecall.jpg');
-    border-radius: 20px;
+    border-radius: 5%;
     border: none;
     cursor: pointer;
 }
 
 .ai_button{
-    width: 100px;
-    height: 100px;
-    margin: 280px 0px 0 275px;
+    width: 17%;
+    height: 150px;
+    margin: 3% 0px 0 71%;
     background-size: cover;
     background-image: url('images/robot.jpg');
-    border-radius: 20px;
+    border-radius: 5%;
     border: none;
     cursor: pointer;
 }
 
-.box1{
+.gphoto{
     background:#1A3141 ;
-    height: 300px;
-    width: 200px;
+    height: 40%;
+    width: 50%;
     position: fixed;
-    border-radius: 25px;
-    left: 25px;
-    top: 50px;
+    border-radius: 6%;
+    left: 6%;
+    top: 6%;
 }
 
-.box1 :first-child{
-    margin: 15px 15px 0 15px;
+.gphoto :first-child{
+    margin: 4% 4% 0 30%;
     color: white;
 }
 
-.box2{
+.bphoto{
     background:#1A3141 ;
-    height: 200px;
-    width: 200px;
+    height: 40%;
+    width: 50%;
     position: fixed;
-    border-radius: 25px;
-    left: 25px;
-    top: 375px;
+    border-radius: 6%;
+    left: 6%;
+    top: 50%;
 }
 
-.box2 :first-child{
-    margin: 15px 15px 0 15px;
+.bphoto :first-child{
+    margin: 4% 4% 0 30%;
     color: white;
 }
 
-.box3{
-    background:#1A3141 ;
-    height: 230px;
-    width: 200px;
-    position: fixed;
-    border-radius: 25px;
-    left: 25px;
-    top: 600px;
-}
-
-.box3 :first-child{
-    margin: 15px 15px 15px 15px;
-    color: white;
-}
 
 .ebutton_writing{
     color: white;
-    font-size: 20px;
-    margin: 195px 0px 0 260px;
+    font-size: 130%;
+    margin: 2% 0px 0 73%;
 }
 
 .aibutton_writing{
     color: white;
     z-index: 1;
-    font-size: 20px;
-    margin: 200px 0px 0 260px;
+    font-size: 130%;
+    margin: 2% 0 0 73%;
 }
 
 .mapbutton_writing{
     color: white;
     z-index: 1;
-    font-size: 20px;
-    margin: 185px 0px 0 275px;
+    font-size: 130%;
+    margin: 2% 0 0 74%;
 }
 
 .cambutton_writing{
     color: white;
     z-index: 1;
-    font-size: 20px;
-    margin: 190px 0px 0 290px;
+    font-size: 130%;
+    margin: 2% 0 0 76%;
 }
