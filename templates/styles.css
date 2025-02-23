@@ -1,0 +1,108 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    height: 0;
+}
+
+.mainbox{
+    background:#42789D ;
+    height: 650px;
+    width: 150px;
+    position: fixed;
+    top: 200px;
+    right: 15px;
+    border-radius: 25px;
+}
+
+.camera_button{
+    width: 100px;
+    height: 100px;
+    margin: 700px 0px 0 275px;
+    background-size: cover;
+    background-image: url('images/logo.jpg');
+    border-radius: 100px;
+    background-color: #6AC372;
+    border: none;
+    cursor: pointer;
+}
+
+.map_button{
+    width: 100px;
+    height: 100px;
+    margin: 550px 0px 0 275px;
+    background-size: cover;
+    background-image: url('images/map.jpg');
+    border-radius: 20px;
+    background-color: #6AC372;
+    border: none;
+    cursor: pointer;
+}
+
+.emergency_button{
+    width: 100px;
+    height: 100px;
+    margin: 50px 0px 0 275px;
+    background-size: cover;
+    background-image: url('images/ecall.jpg');
+    border-radius: 20px;
+    background-color: red;
+    border: none;
+    cursor: pointer;
+}
+
+.ai_button{
+    width: 100px;
+    height: 100px;
+    margin: 400px 0px 0 275px;
+    background-size: cover;
+    background-image: url('images/robot.jpg');
+    border-radius: 20px;
+    background-color: #6AC372;
+    border: none;
+    cursor: pointer;
+}
+
+.box1{
+    background:#1A3141 ;
+    height: 300px;
+    width: 200px;
+    position: fixed;
+    border-radius: 25px;
+    left: 25px;
+    top: 50px;
+}
+
+.box1 :first-child{
+    margin: 15px 15px 0 15px;
+    color: white;
+}
+
+.box2{
+    background:#1A3141 ;
+    height: 200px;
+    width: 200px;
+    position: fixed;
+    border-radius: 25px;
+    left: 25px;
+    top: 375px;
+}
+
+.box2 :first-child{
+    margin: 15px 15px 0 15px;
+    color: white;
+}
+
+.box3{
+    background:#1A3141 ;
+    height: 230px;
+    width: 200px;
+    position: fixed;
+    border-radius: 25px;
+    left: 25px;
+    top: 600px;
+}
+
+.box3 :first-child{
+    margin: 15px 15px 15px 15px;
+    color: white;
+}
