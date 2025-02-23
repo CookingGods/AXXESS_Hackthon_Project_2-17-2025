@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/styles.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>SnapAI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
        
 </head>
 <body style="background-color:#1e1e1e;">
+    <!-- Logo and Title -->
+    <div class="logo-container">
+        <i class="fas fa-heartbeat title-logo-icon"></i>
+        <h1 class="title-logo">Health & Safety</h1>
+    </div>
+
+    <!-- Health Tip Section -->
+    <div class="health-tip-container">
+        <h1 class="health-tip-heading">Daily Health Tip</h1>
+        <p class="h_tip">Eat healthy: Eat more fruits, vegetables, whole grains, lean meats, and fish. Limit unhealthy foods, saturated fat, sugar, and salt.</p>
+    </div>
+
+    <!-- Navigation Buttons -->
     <div class="mainbox">
         <div class="nav-item">
             <a href="{{ url_for('Chatbot') }}">
@@ -39,24 +49,16 @@
             <span class="nav-label">Map</span>
         </div>
     </div>
-    
+
+    <!-- Emergency Button -->
     <div class="emergency-container">
         <a href="{{ url_for('Emergency') }}">
             <button class="emergency-button">
                 <i class="fas fa-phone-volume"></i>
-                <!-- or you could use alternatives like:
-                <i class="fas fa-exclamation-circle"></i>
-                <i class="fas fa-ambulance"></i>
-                -->
             </button>
         </a>
         <span class="nav-label">Emergency Call</span>
     </div>
-    <div class="health-tip-container">
-        <h1 class="health-tip-heading">Daily Health Tip</h1>
-        <h2 class="h_tip">Eat healthy: Eat more fruits, vegetables, whole grains, lean meats, and fish. Limit unhealthy foods, saturated fat, sugar, and salt.</h2>
-    </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

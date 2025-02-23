@@ -1,72 +1,69 @@
-.mainbox {
-    background: #183052;
-    height: 36%;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border: 8px solid #071ee8;
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    background-color: #1e1e1e;
+}
+
+/* Logo and Title */
+.logo-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #183052;
+    border-bottom: 4px solid #071ee8;
+}
+
+.title-logo-icon {
+    font-size: 2.5rem;
+    color: white;
+    margin-right: 10px;
+}
+
+.title-logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+}
+
+/* Health Tip and Emergency Button Container */
+.health-tip-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #183052;
     padding: 20px;
     border-radius: 20px;
-    max-width: 100%; 
-    margin: 0 auto;
-    gap: 20px;
+    border: 4px solid #071ee8;
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
     box-sizing: border-box;
-    overflow: hidden; 
 }
 
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    justify-content: center;
+.health-tip-content {
+    flex: 1;
+    margin-right: 20px;
 }
 
-.nav-button {
-    width: 110px;
-    height: 110px;
-    border: none;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.health-tip-heading {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
-.nav-button i {
-    font-size: 48px;
+.h_tip {
+    font-size: 1rem;
+    line-height: 1.5;
     color: white;
-    transition: all 0.3s ease;
 }
 
-.nav-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-5px);
-}
-
-.nav-button:hover i {
-    color: #071ee8;
-}
-
-.nav-label {
-    color: white;
-    font-size: 1.3rem;
-    font-weight: 500;
-    text-align: center;
-}
-
+/* Emergency Button */
 .emergency-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,8 +71,8 @@
 }
 
 .emergency-button {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border: none;
     cursor: pointer;
     background: #ff4444;
@@ -89,11 +86,10 @@
 }
 
 .emergency-button i {
-    font-size: 48px;
+    font-size: 36px;
     color: white;
 }
 
-/* Add subtle pulsing animation */
 @keyframes pulse {
     0% {
         box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
@@ -111,69 +107,95 @@
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
 }
-/* Add responsive design */
+
+.nav-label {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Navigation Buttons */
+.mainbox {
+    background: #183052;
+    height: auto;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border: 8px solid #071ee8;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px 20px 0 0;
+    box-sizing: border-box;
+    gap: 10px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-button {
+    width: 80px;
+    height: 80px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button i {
+    font-size: 36px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.nav-button:hover i {
+    color: #071ee8;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .nav-button {
+    .health-tip-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .health-tip-content {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .emergency-button {
         width: 80px;
         height: 80px;
     }
+
+    .nav-button {
+        width: 60px;
+        height: 60px;
+    }
     
     .nav-button i {
-        font-size: 32px;
+        font-size: 24px;
     }
     
     .nav-label {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
-    
-    .emergency-button {
-        width: 90px;
-        height: 90px;
-    }
-}
-
-.health-tip-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -90%); 
-    background: #183052;
-    padding: 20px;
-    border-radius: 20px;
-    border: 4px solid #071ee8;
-    box-sizing: border-box;
-    width: 70%;
-    height: 30%;
-}
-
-.health-tip-heading {
-    color: white;
-    font-size: 2rem;
-    margin-bottom: 75%;
-    font-weight: 700;
-    text-align: center;
-    position: fixed;
-    text-wrap: wrap;
-}
-
-.h_tip{
-    color: white;
-    font-size: 1rem;
-    flex-wrap: wrap;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-}
-
-.title_logo {
-    color: white;
-    font-size: x-large;
-    font-weight: bolder;
 }

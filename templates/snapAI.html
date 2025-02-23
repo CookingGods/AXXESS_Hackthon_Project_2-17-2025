@@ -231,30 +231,32 @@ async function captureImage() {
 
     // Convert canvas to a Blob in JPEG format
     canvas.toBlob(async (blob) => {
-        // Create FormData to send the image as a file
-        const formData = new FormData();
-        formData.append('image', blob, 'captured_image.jpg');  // Append the Blob as a file
+    // Create FormData to send the image as a file
+    const formData = new FormData();
+    formData.append('image', blob, 'captured_image.jpg');  // Append the Blob as a file
 
-        // Submit the image to Flask using the getObjResponse function
-        const response = await getObjResponse(formData);
-        // console.log('Response:', response);
-        const label = response.label;
-        console.log('Label:', label);
-        initialDescription(label);
+    // Submit the image to Flask using getObjResponse function
+    const response = await getObjResponse(formData);
+    console.log('Response:', response);
 
-        stopVideoStream();
+    // Use the correct label from the API response
+    const label = response.label;
+    console.log('Label:', label);
+    initialDescription(label);
 
-        // Hide video and show captured image
-        video.style.display = 'none';
-        captureButton.style.display = 'none';
+    stopVideoStream();
 
-        // Use the URL of the saved image from Flask
-        capturedImage.src = "http://192.168.61.99:5000/uploads/output_with_boxes_and_labels.jpg";
-        capturedImage.style.display = 'block';
-        callButton.style.display = 'block';
-        chatContainer.style.display = 'block';
-        camera.style.height = '60vh';
-    }, 'image/jpeg');
+    // Hide video and show captured image
+    video.style.display = 'none';
+    captureButton.style.display = 'none';
+
+    // Use the image URL returned from Flask
+    capturedImage.src = response.image_url || "http://192.168.61.99:5000/uploads/output_with_boxes_and_labels.jpg";
+    capturedImage.style.display = 'block';
+    callButton.style.display = 'block';
+    chatContainer.style.display = 'block';
+    camera.style.height = '60vh';
+}, 'image/jpeg');
 }
 
     function stopVideoStream() {
@@ -326,19 +328,38 @@ if (response.ok) {
     }
 
     async function getObjResponse(formData) {
-      try {
-          const response = await axios.post('http://192.168.61.99:5000/process-image', formData, {
-              headers: {
-                  'Content-Type': 'multipart/form-data',
-              }
-          });
+    try {
+        const response = await axios.post('http://192.168.61.99:5000/process-image', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            timeout: 10000 // Set a timeout to prevent hanging requests
+        });
 
-          return response.data || "Sorry, there was an error.";
-      } catch (error) {
-          console.error("Error calling Flask API:", error);
-          return "Sorry, there was an error.";
-      }
-  }
+        if (!response || !response.data || !response.data.label) {
+            throw new Error("Invalid response from server");
+        }
+
+        console.log("Full Response:", response.data); // Debugging
+        return response.data.label;
+    } catch (error) {
+        console.error("Error calling Flask API:", error);
+
+        // Handle specific Axios errors
+        if (error.response) {
+            console.error("Server responded with status:", error.response.status);
+            return `Server error: ${error.response.status}`;
+        } else if (error.request) {
+            console.error("No response received from server");
+            return "No response from server";
+        } else {
+            console.error("Axios request error:", error.message);
+            return "Request error";
+        }
+    }
+}
+
+
   </script>
 </body>
 </html>

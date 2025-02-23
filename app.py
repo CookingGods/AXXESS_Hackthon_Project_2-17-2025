@@ -135,14 +135,19 @@ def process_image():
 
         # Save the processed image
         output_image_path = "output_with_boxes_and_labels.jpg"
+        if os.path.exists(output_image_path):
+            os.remove(output_image_path)
+            print("Removed existing output image")
         image.save(output_image_path)
 
-        return jsonify({'label': label})
+        return send_file(output_image_path, mimetype='image/jpeg')
+        #return jsonify({'label': label})
+
 
     except Exception as e:
         error_message = f"Error processing image: {str(e)}"
         print(error_message)
-        print(traceback.format_exc())
+        print(traceback.format_exc())  
         return jsonify({"error": error_message}), 500
 
 
