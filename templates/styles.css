@@ -1,35 +1,62 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    height: 0;
-}
-
 .mainbox {
     background: #42789D;
     z-index: -1;
-    height: 96%; 
-    width: 36%;  
+    height: 36%;
+    width: 102%;
     position: fixed;
-    top: 2%;
-    right: 3%;
+    top: 80%;
+    left: -1%;
     border-radius: 30px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;  /* Keep buttons in a row */
     align-items: center;
     justify-content: space-around;
-    border: 8px solid #1A3141;
+    border-radius: 50%/100px 100px 0 0;
 }
 
-.camera_button,
-.map_button,
-.emergency_button,
-.ai_button {
-    width: 150px;
-    height: 150px;
+.aibutton, .mbutton, .cbutton {
+    display: flex;
+    flex-direction: column;  /* Ensures text is below the button */
+    align-items: center;
+    justify-content: center;
+}
+
+.map_button {
+    width: 120px;
+    height: 120px;
     background-size: cover;
     border: none;
     cursor: pointer;
-    margin-top: -55%;
+    margin-right: 10%;  /* Adjust margin for spacing */
+    order: 1;  /* Places it on the left side */
+}
+
+.ai_button {
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    margin-right: 10%;  /* Adjust margin for spacing */
+    order: 2;  /* Places it on the right side */
+}
+
+.camera_button {
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+}
+
+.emergency_button {
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    margin-top: 10%;
+    margin-left: 70%;
 }
 
 .camera_button {
@@ -52,55 +79,30 @@
     border-radius: 5%;
 }
 
-.ebutton,
-.aibutton,
-.mbutton,
-.cbutton {
-    text-align: center;
-}
-
-.ebutton_writing,
-.aibutton_writing,
 .mapbutton_writing,
-.cambutton_writing {
+.cambutton_writing, 
+.aibutton_writing {
     color: white;
     font-size: 130%;
 }
 
-.gphoto {
-    background: #1A3141;
-    height: 40%;
-    width: 50%;
-    position: fixed;
-    border-radius: 6%;
-    left: 6%;
-    top: 6%;
-    align-items: top;
-    display: flex;
-    justify-content: center;
-    border: 8px solid black;
+.mapbutton_writing {
+    margin-top: 10px;  /* Adjust spacing from button */
 }
 
-.gphoto h1 {
-    margin-top: 5%;
+.cambutton_writing {
+    margin-top: 10px;  /* Adjust spacing from button */
+}
+
+.ebutton_writing {
     color: white;
+    margin-left: 69%;
+    font-size: 130%;
 }
 
-.bphoto {
-    background: #1A3141;
-    height: 40%;
-    width: 50%;
-    position: fixed;
-    border-radius: 6%;
-    left: 6%;
-    top: 50%;
-    align-items: top;
-    display: flex;
-    justify-content: center;
-    border: 8px solid black;
-}
-
-.bphoto h1 {
-    margin-top: 5%;
+.aibutton_writing {
     color: white;
+    margin-left: 70%;
+    font-size: 120%;
+    margin-top: -90%;
 }
