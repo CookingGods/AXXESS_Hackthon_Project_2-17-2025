@@ -19,7 +19,6 @@
     overflow: hidden; 
 }
 
-
 .nav-item {
     display: flex;
     flex-direction: column;
@@ -30,8 +29,8 @@
 }
 
 .nav-button {
-    width: 210px;
-    height: 210px;
+    width: 110px;
+    height: 110px;
     border: none;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.1);
@@ -75,8 +74,8 @@
 }
 
 .emergency-button {
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 120px;
     border: none;
     cursor: pointer;
     background: #ff4444;
@@ -85,6 +84,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+    animation: pulse 2s infinite;
 }
 
 .emergency-button i {
@@ -92,11 +93,25 @@
     color: white;
 }
 
+/* Add subtle pulsing animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(255, 68, 68, 0.5);
+    }
+    100% {
+        box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+    }
+}
+
 .emergency-button:hover {
     background: #ff6666;
     transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
 }
-
+/* Add responsive design */
 @media (max-width: 768px) {
     .nav-button {
         width: 80px;
@@ -162,4 +177,3 @@
     font-size: x-large;
     font-weight: bolder;
 }
-
