@@ -22,7 +22,7 @@ client = genai.Client(api_key=GEM_API_KEY)
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template("index.html")
+    return render_template("main.html")
 
 @app.route('/chat', methods=['POST'])
 def chat():
