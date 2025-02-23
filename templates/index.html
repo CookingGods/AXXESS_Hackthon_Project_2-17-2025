@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Camera & Call App</title>
+  <title>SnapAI</title>
   <style>
     html, body {
       margin: 0;
@@ -11,20 +11,30 @@
       height: 100%;
       background: black;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     #camera {
       width: 100%;
       height: 50vh;
-      object-fit: cover;
+      object-fit: contain; /* This ensures the video scales within the container */
       background: #000;
+      position: relative;
+      overflow: hidden;  /* Ensures no overflow beyond the container */
     }
-    #bottom {
-      height: 50vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+
+    #cameraStream {
+      width: 100%;
+      height: 100%; /* Ensures video fills the container completely */
+      object-fit: contain; /* Prevents the video from stretching beyond its container */
     }
+
     #callButton {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
       padding: 15px 25px;
       font-size: 1.2rem;
       border: none;
@@ -33,44 +43,223 @@
       color: white;
       cursor: pointer;
     }
+
+    #bottom {
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Image for Capture Button */
+.captureImage {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('images/logo.jpg'); /* Set the path to the logo */
+  background-size: contain; /* Ensures the logo fits within the button */
+  background-repeat: no-repeat; /* Avoid repeating the image */
+  width: 100px; /* Adjust the size of the button */
+  height: 100px; /* Adjust the height to match width */
+  border: none; /* Remove border */
+  border-radius: 50%; /* Make the button circular */
+  cursor: pointer;
+}
+
+
+    /* Chat Section Styles */
+    #chatContainer {
+      position: fixed; /* Keep the chat container fixed at the bottom */
+      bottom: 0;
+      width: 100%;
+      height: 40%;
+      background-color: #333;
+      color: white;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    #chatMessages {
+      padding: 10px;
+      height: 85%;
+      overflow-y: auto;
+    }
+
+    #userInput {
+      width: 80%;
+      padding: 10px;
+      border: none;
+      font-size: 1.2rem;
+      border-radius: 5px;
+    }
+
+    #sendButton {
+      padding: 10px;
+      font-size: 1.2rem;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-left: 10px;
+    }
+
+    #chatInputBar {
+      position: fixed; /* Keep the input bar fixed at the bottom */
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+      padding: 10px;
+      z-index: 2; /* Make sure it stays on top of the chat container */
+    }
+
+    #chatInputBar input {
+      width: 70%;
+      padding: 5px;
+      border: none;
+      font-size: 1.2rem;
+      border-radius: 5px;
+    }
+
+    #chatInputBar button {
+      padding: 10px;
+      font-size: 1.2rem;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-left: 5px;
+    }
+
+    #capturedImage {
+      width: 100%;
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
-  <h1>Camera App</h1>
-  <video id="camera" autoplay playsinline></video>
-
-  <div id="bottom">
+  <div id="camera">
+    <video id="cameraStream" autoplay playsinline></video>
+    <!-- Call Button above Camera -->
     <button id="callButton" onclick="window.location.href='tel:+1234567890'">Call Now</button>
+    <!-- Capture Image replaced with an Image -->
+    <!-- <img id="captureImage" src="logo.png" alt="Capture Image" onclick="captureImage()" /> -->
+    <button onclick="captureImage()" class="captureImage"></button>
+
+  </div>
+  
+
+  <!-- Captured image display -->
+  <img id="capturedImage" src="" alt="Captured Image" />
+
+  <!-- Chat Container -->
+  <div id="chatContainer">
+    <div id="chatMessages">
+      <!-- Chat messages will appear here -->
+    </div>
+    <div id="chatInputBar">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button id="sendButton" onclick="sendMessage()">Send</button>
+    </div>
   </div>
 
   <script>
+    let videoStream;  // Store video stream to stop it later
+
     async function startCamera() {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
+        videoStream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: "environment" },
           audio: false
         });
-        document.getElementById('camera').srcObject = stream;
+        document.getElementById('cameraStream').srcObject = videoStream;
       } catch (err) {
         alert("Camera access denied. Please check your browser settings.");
         console.error("Error accessing camera:", err);
       }
     }
 
+    // Capture image from video feed
+    function captureImage() {
+      console.log('Capture image clicked');
+      const video = document.getElementById('cameraStream');
+      const canvas = document.createElement('canvas');
+      const capturedImage = document.getElementById('capturedImage');
+
+      // Set canvas size to match video
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      // Draw current video frame to canvas
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Convert canvas to a data URL (image)
+      const imageDataUrl = canvas.toDataURL('image/png');
+      console.log('Image data URL:', imageDataUrl);  // Check if image data URL is generated
+
+      // Stop the video stream
+      stopVideoStream();
+
+      // Hide video and show captured image
+      video.style.display = 'none';
+      capturedImage.src = imageDataUrl;
+      capturedImage.style.display = 'block';  // Ensure the image is displayed
+    }
+
+    // Stop the video stream
+    function stopVideoStream() {
+      if (videoStream) {
+        const tracks = videoStream.getTracks();
+        tracks.forEach(track => track.stop());  // Stop all tracks
+      }
+    }
+
     window.addEventListener("DOMContentLoaded", startCamera);
 
-    document.addEventListener("click", () => {
-      if (!document.fullscreenElement) {
-        <!-- openFullscreen(); -->
-      }
-    });
+    async function sendMessage() {
+      const userInput = document.getElementById("userInput").value;
+      if (userInput.trim() === "") return;
 
-    function openFullscreen() {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().catch(err => {
-          console.log("Fullscreen blocked:", err);
+      // Add user message to chat window
+      const chatMessages = document.getElementById("chatMessages");
+      chatMessages.innerHTML += `<div><strong>User:</strong> ${userInput}</div>`;
+
+      // Call the Flask backend with user input
+      const response = await getGeminiResponse(userInput);
+
+      // Add Gemini response to chat window
+      chatMessages.innerHTML += `<div><strong>SnapAI:</strong> ${response}</div>`;
+
+      // Clear input field
+      document.getElementById("userInput").value = '';
+
+      // Scroll to the bottom of the chat window
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // API Call to Flask backend to interact with Gemini
+    async function getGeminiResponse(prompt) {
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/chat', {
+          message: prompt,  // User input that you want to send to Gemini
         });
+
+        // Return the response from Gemini (Flask backend)
+        return response.data.response || "Sorry, there was an error.";
+      } catch (error) {
+        console.error("Error calling Flask API:", error);
+        return "Sorry, there was an error.";
       }
     }
   </script>
