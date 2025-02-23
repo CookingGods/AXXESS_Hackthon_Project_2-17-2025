@@ -1,1 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearest ER</title>
+</head>
+<body>
+    <h2>Finding the Nearest Emergency Room...</h2>
+    <p>Please wait while we locate the nearest emergency room.</p>
 
+    <script>
+        function findNearestER() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var lat = position.coords.latitude;
+                        var lon = position.coords.longitude;
+                        // Use the Google Maps directions endpoint
+                        var googleMapsUrl = `https://www.google.com/maps/dir/${lat},${lon}/emergency+room/`;
+                        window.location.href = googleMapsUrl;
+                    },
+                    function(error) {
+                        alert("Location access denied. Redirecting to a generic ER search.");
+                        window.location.href = "https://www.google.com/maps/search/emergency+room+near+me";
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+                window.location.href = "https://www.google.com/maps/search/emergency+room+near+me";
+            }
+        }
+
+        // Automatically call the function when the page loads
+        findNearestER();
+    </script>
+</body>
+</html>
