@@ -123,7 +123,7 @@
     flex-direction: column;
     align-items: center;
     position: fixed;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -90%); 
     background: #183052;
@@ -138,9 +138,28 @@
 .health-tip-heading {
     color: white;
     font-size: 2rem;
-    margin-bottom: 35%;
+    margin-bottom: 75%;
     font-weight: 700;
     text-align: center;
     position: fixed;
     text-wrap: wrap;
 }
+
+.h_tip{
+    color: white;
+    font-size: 1rem;
+    flex-wrap: wrap;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.title_logo {
+    color: white;
+    font-size: x-large;
+    font-weight: bolder;
+}
+
