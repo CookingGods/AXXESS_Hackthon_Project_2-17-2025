@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat with Gemini</title>
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById('userMessage').value;
+      
+      if (!message) {
+        alert('Please enter a message.');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: message })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('response').innerHTML = `<strong>Gemini:</strong> ${data.response || 'No response'}`;
+        } else {
+          document.getElementById('response').innerHTML = `<strong>Error:</strong> ${data.error || 'Something went wrong'}`;
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('response').innerHTML = '<strong>Error:</strong> Unable to reach the server.';
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <h1>Chat with Gemini</h1>
+  
+  <div>
+    <input type="text" id="userMessage" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send Message</button>
+  </div>
+
+  <div id="response" style="margin-top: 20px; color: white; background-color: #333; padding: 10px; max-width: 400px; word-wrap: break-word;">
+    <!-- Gemini's response will be displayed here -->
+  </div>
+
+</body>
+</html>
