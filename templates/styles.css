@@ -1,5 +1,5 @@
 .mainbox {
-    background: #42789D;
+    background: #183052;
     z-index: -1;
     height: 36%;
     width: 102%;
@@ -8,10 +8,11 @@
     left: -1%;
     border-radius: 30px;
     display: flex;
-    flex-direction: row;  /* Keep buttons in a row */
+    flex-direction: row;  
     align-items: center;
     justify-content: space-around;
     border-radius: 50%/100px 100px 0 0;
+    border: 8px solid #071ee8;
 }
 
 
@@ -22,7 +23,7 @@
     border: none;
     cursor: pointer;
     margin-left: -10%;  
-    margin-bottom: 110%;
+    margin-bottom: 115%;
 }
 
 .ai_button {
@@ -41,7 +42,8 @@
     background-size: cover;
     border: none;
     cursor: pointer;
-    margin-bottom: 105%;
+    margin-bottom: 110%;
+    margin-left: 10%;
 }
 
 .emergency_button {
@@ -77,5 +79,26 @@
 .ebutton_writing {
     color: white;
     margin-left: 69.2%;
+    font-size: 130%;
+}
+
+.ai_writing{
+    color: white;
+    margin-left: 12.5%;
+    margin-top: 90.5%;
+    font-size: 130%;
+}
+
+.cam_writing{
+    color: white;
+    margin-left: 47.5%;
+    margin-top: -3.5%;
+    font-size: 130%;
+}
+
+.er_writing{
+    color: white;
+    margin-left: 80%;
+    margin-top: -3.5%;
     font-size: 130%;
 }
