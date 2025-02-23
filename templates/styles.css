@@ -14,39 +14,34 @@
     border-radius: 50%/100px 100px 0 0;
 }
 
-.aibutton, .mbutton, .cbutton {
-    display: flex;
-    flex-direction: column;  /* Ensures text is below the button */
-    align-items: center;
-    justify-content: center;
-}
 
 .map_button {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
     background-size: cover;
     border: none;
     cursor: pointer;
-    margin-right: 10%;  /* Adjust margin for spacing */
-    order: 1;  /* Places it on the left side */
+    margin-left: -10%;  
+    margin-bottom: 110%;
 }
 
 .ai_button {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
     background-size: cover;
     border: none;
     cursor: pointer;
-    margin-right: 10%;  /* Adjust margin for spacing */
-    order: 2;  /* Places it on the right side */
+    margin-left: 10%; 
+    margin-bottom: 110%;
 }
 
 .camera_button {
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     background-size: cover;
     border: none;
     cursor: pointer;
+    margin-bottom: 105%;
 }
 
 .emergency_button {
@@ -79,30 +74,8 @@
     border-radius: 5%;
 }
 
-.mapbutton_writing,
-.cambutton_writing, 
-.aibutton_writing {
-    color: white;
-    font-size: 130%;
-}
-
-.mapbutton_writing {
-    margin-top: 10px;  /* Adjust spacing from button */
-}
-
-.cambutton_writing {
-    margin-top: 10px;  /* Adjust spacing from button */
-}
-
 .ebutton_writing {
     color: white;
-    margin-left: 69%;
+    margin-left: 69.2%;
     font-size: 130%;
-}
-
-.aibutton_writing {
-    color: white;
-    margin-left: 70%;
-    font-size: 120%;
-    margin-top: -90%;
 }
