@@ -5,39 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+       
 </head>
 <body style="background-color:#1e1e1e;">
-    <div class="ebutton">
-        <a href="index.html">
-            <button class="emergency_button"></button>
-        </a>
-        <div class="ebutton_writing">Emergency Call</div>
-    </div>
-    <div class='mainbox'>
-        <div class="aibutton">
+    <div class="mainbox">
+        <div class="nav-item">
             <a href="Chatbot.html">
-                <button class="ai_button"></button>
+                <button class="nav-button">
+                    <i class="fas fa-robot"></i>
+                </button>
             </a>
+            <span class="nav-label">AI Chat</span>
         </div>
-
-    <div class="cbutton">
-        <a href="index.html">
-            <button class="camera_button"></button>
-        </a>
-    </div>
-
-        <div class="mbutton">
+        
+        <div class="nav-item">
+            <a href="index.html">
+                <button class="nav-button">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </a>
+            <span class="nav-label">Camera</span>
+        </div>
+        
+        <div class="nav-item">
             <a href="ERMAP.html">
-                <button class="map_button"></button>
+                <button class="nav-button">
+                    <i class="fas fa-map-marked-alt"></i>
+                </button>
             </a>
+            <span class="nav-label">Map</span>
         </div>
     </div>
-
-    <div class="ai_writing">AI Chat</div>
-
-    <div class="cam_writing">Camera</div>
-
-    <div class="er_writing">Nearest ER</div>
-
+    
+    <div class="emergency-container">
+        <a href="index.html">
+            <button class="emergency-button">
+                <i class="fas fa-phone-emergency"></i>
+            </button>
+        </a>
+        <span class="nav-label">Emergency Call</span>
+    </div>
 </body>
 </html>
+
