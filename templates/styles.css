@@ -40,7 +40,7 @@
 .emergency_button{
     width: 100px;
     height: 100px;
-    margin: 85px 0px 0 275px;
+    margin: 80px 0px 0 275px;
     background-size: cover;
     background-image: url('images/ecall.jpg');
     border-radius: 20px;
