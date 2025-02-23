@@ -7,10 +7,10 @@
 .mainbox{
     background:#42789D ;
     z-index: -1;
-    height: 650px;
+    height: 815px;
     width: 150px;
     position: fixed;
-    top: 200px;
+    top: 25px;
     right: 15px;
     border-radius: 25px;
 }
@@ -18,11 +18,10 @@
 .camera_button{
     width: 100px;
     height: 100px;
-    margin: 700px 0px 0 275px;
+    margin: 660px 0px 0 275px;
     background-size: cover;
     background-image: url('images/logo.jpg');
     border-radius: 100px;
-    background-color: #1A3141;
     border: none;
     cursor: pointer;
 }
@@ -30,11 +29,10 @@
 .map_button{
     width: 100px;
     height: 100px;
-    margin: 550px 0px 0 275px;
+    margin: 465px 0px 0 275px;
     background-size: cover;
     background-image: url('images/map.jpg');
     border-radius: 20px;
-    background-color: #6AC372;
     border: none;
     cursor: pointer;
 }
@@ -42,11 +40,10 @@
 .emergency_button{
     width: 100px;
     height: 100px;
-    margin: 50px 0px 0 275px;
+    margin: 85px 0px 0 275px;
     background-size: cover;
     background-image: url('images/ecall.jpg');
     border-radius: 20px;
-    background-color: red;
     border: none;
     cursor: pointer;
 }
@@ -54,11 +51,10 @@
 .ai_button{
     width: 100px;
     height: 100px;
-    margin: 400px 0px 0 275px;
+    margin: 280px 0px 0 275px;
     background-size: cover;
     background-image: url('images/robot.jpg');
     border-radius: 20px;
-    background-color: #6AC372;
     border: none;
     cursor: pointer;
 }
@@ -106,4 +102,31 @@
 .box3 :first-child{
     margin: 15px 15px 15px 15px;
     color: white;
+}
+
+.ebutton_writing{
+    color: white;
+    font-size: 20px;
+    margin: 195px 0px 0 260px;
+}
+
+.aibutton_writing{
+    color: white;
+    z-index: 1;
+    font-size: 20px;
+    margin: 200px 0px 0 260px;
+}
+
+.mapbutton_writing{
+    color: white;
+    z-index: 1;
+    font-size: 20px;
+    margin: 185px 0px 0 275px;
+}
+
+.cambutton_writing{
+    color: white;
+    z-index: 1;
+    font-size: 20px;
+    margin: 190px 0px 0 290px;
 }
